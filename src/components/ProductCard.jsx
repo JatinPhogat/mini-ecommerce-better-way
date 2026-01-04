@@ -1,6 +1,6 @@
 function ProductCard({ product, addToCart }) {
   return (
-    <div style={{ border: '1px solid #ddd', padding: '15px', background: 'white', borderRadius: '8px', display: 'flex', flexDirection: 'column', minHeight: '220px' }}>
+    <div style={{ border: '1px solid #ddd', padding: '15px', background: 'white', borderRadius: '8px', display: 'flex', flexDirection: 'column', minHeight: '220px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
       <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
         <div style={{ flex: 1 }}>
           <h3 style={{ margin: '0 0 8px 0', fontSize: '16px' }}>{product.title}</h3>

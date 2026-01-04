@@ -3,7 +3,7 @@ function Cart({ cart, removeFromCart, updateQuantity }) {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div style={{ width: '300px', border: '1px solid #ddd', padding: '15px', background: 'white', borderRadius: '8px' }}>
+    <div style={{ width: '300px', border: 'none', padding: '20px', background: 'white', borderRadius: '12px', boxShadow: '0 2px 12px rgba(0,0,0,0.08)', position: 'sticky', top: '20px' }}>
       <h2 style={{ margin: '0 0 15px 0' }}>Cart</h2>
       <p style={{ margin: '5px 0' }}>Items: <strong>{totalItems}</strong></p>
       <p style={{ margin: '5px 0', fontSize: '18px' }}>Total: <strong>${total.toFixed(2)}</strong></p>
@@ -12,7 +12,7 @@ function Cart({ cart, removeFromCart, updateQuantity }) {
         <p>Empty cart</p>
       ) : (
         cart.map(item => (
-          <div key={item.id} style={{ borderBottom: '1px solid #eee', padding: '10px 0' }}>
+          <div key={item.id} style={{ borderBottom: 'none', padding: '15px', background: 'white', borderRadius: '8px', marginBottom: '12px', border: '1px solid #e9ecef', borderLeft: '3px solid #007bff' }}>
             <p style={{ margin: '5px 0', fontSize: '14px' }}><strong>{item.title}</strong></p>
             <p style={{ margin: '5px 0', color: '#007bff' }}>${item.price}</p>
             <div style={{ display: 'flex', gap: '5px', alignItems: 'center', marginTop: '8px' }}>

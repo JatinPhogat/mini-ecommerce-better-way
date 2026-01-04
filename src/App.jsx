@@ -45,6 +45,8 @@ function App() {
         setCart(cart.map(item =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         ));
+      } else {
+        alert(`Maximum quantity available for ${product.title} is ${product.stock}`);
       }
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
@@ -55,7 +57,11 @@ function App() {
 
   const updateQuantity = (id, qty) => {
     const product = products.find(p => p.id === id);
-    if (qty < 1 || qty > product.stock) return;
+    if (qty < 1) return;
+    if (qty > product.stock) {
+      alert(`Maximum quantity available for ${product.title} is ${product.stock}`);
+      return;
+    }
     setCart(cart.map(item => item.id === id ? { ...item, quantity: qty } : item));
   };
 
