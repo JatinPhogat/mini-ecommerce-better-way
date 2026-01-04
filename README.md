@@ -2,7 +2,12 @@
 
 A simple e-commerce application built with React that allows users to browse products, filter and search items, and manage a shopping cart.
 
+
+**Live Deployment :** [mini-ecommerce](https://mini-ecommerce-better-way.vercel.app/)
+
+**Preview:**
 ![Application Preview](./assets/preview-pic.png)
+
 
 ## Features
 
