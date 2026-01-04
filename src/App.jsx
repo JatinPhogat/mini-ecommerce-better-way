@@ -8,11 +8,25 @@ function App() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
   const [sort, setSort] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     fetch('https://dummyjson.com/products?limit=20')
-      .then(res => res.json())
-      .then(data => setProducts(data.products));
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
+      .then(data => {
+        setProducts(data.products);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error:', err);
+        setError(err.message);
+        setLoading(false);
+      });
   }, []);
 
   const categories = ['all', ...new Set(products.map(p => p.category))];
@@ -45,6 +59,24 @@ function App() {
     setCart(cart.map(item => item.id === id ? { ...item, quantity: qty } : item));
   };
 
+  if (loading) {
+    return (
+      <div>
+        <h1>Mini E-commerce</h1>
+        <p style={{ textAlign: 'center', padding: '40px', fontSize: '18px' }}>Loading products...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <h1>Mini E-commerce</h1>
+        <p style={{ textAlign: 'center', padding: '40px', color: 'red', fontSize: '18px' }}>Error: {error}. Please refresh the page.</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>Mini E-commerce</h1>
@@ -58,20 +90,20 @@ function App() {
           <div style={{ marginBottom: '20px', background: 'white', padding: '15px', borderRadius: '8px' }}>
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search products..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               style={{ padding: '8px', marginRight: '10px' }}
             />
             <select value={category} onChange={(e) => setCategory(e.target.value)} style={{ padding: '8px', marginRight: '10px' }}>
-              {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+              {categories.map(cat => <option key={cat} value={cat}>{cat === 'all' ? 'All Categories' : cat.charAt(0).toUpperCase() + cat.slice(1)}</option>)}
             </select>
             <select value={sort} onChange={(e) => setSort(e.target.value)} style={{ padding: '8px', marginRight: '10px' }}>
-              <option value="">Sort</option>
+              <option value="">Default</option>
               <option value="low">Low to High</option>
               <option value="high">High to Low</option>
             </select>
-            <button onClick={() => { setSearch(''); setCategory('all'); setSort(''); }}>Clear</button>
+            <button onClick={() => { setSearch(''); setCategory('all'); setSort(''); }}>Clear Filters</button>
           </div>
 
           <ProductList products={filtered} addToCart={addToCart} />
